@@ -50,6 +50,8 @@ urlpatterns = [
     path('resenas/', resenas_views.ver_resenas, name='ver_resenas'),
     path('resenas/agregar/', resenas_views.agregar_resena, name='agregar_resena'),
     path('disenar/', configurador_views.disenar_uñas, name='disenar'),
+    path('dashboard/', views.dashboard, name='dashboard'),  # ← NUEVO
+
 ]
 
 # Solo en desarrollo
