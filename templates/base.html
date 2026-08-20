@@ -36,10 +36,19 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#disenos">✨ Diseños</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#servicios">💎 Servicios</a></li>
                     
-                    <!-- Enlace a la página de reseñas (NUEVO) -->
+                    <!-- Enlace a la página de reseñas -->
                     <li class="nav-item"><a class="nav-link" href="{% url 'ver_resenas' %}">⭐ Reseñas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'disenar' %}">🎨 Diseña</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#ubicacion">📍 Ubicación</a></li>
+                    
+                    <!-- ⭐ NUEVO: Enlace al Dashboard (solo para admin) ⭐ -->
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard' %}">
+                                👑 Admin
+                            </a>
+                        </li>
+                    {% endif %}
                     
                     <!-- Botón de agendar -->
                     <li class="nav-item">
