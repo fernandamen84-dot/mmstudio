@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">⭐ Lo que dicen nuestras clientas</h2>
+            <p class="section-subtitle">Ellas ya vivieron la experiencia MM Studio 💕</p>
+        </div>
+        
+        <div class="row g-4">
+            {% if resenas %}
+                {% for resena in resenas %}
+                <div class="col-md-4">
+                    <div class="card-resena card-resena-lista">
+                        <div class="stars">
+                            {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= resena.calificacion %}⭐{% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="resena-text">"{{ resena.comentario }}"</p>
+                        <p class="resena-autor">— {{ resena.nombre }}</p>
+                        {% if resena.foto %}
+                            <div class="resena-foto-container-lista">
+                                <img src="{{ resena.foto.url }}" alt="Foto de uñas" class="resena-foto-lista">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">✨ Aún no hay reseñas. ¡Sé la primera en dejar la tuya!</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'agregar_resena' %}" class="btn btn-primary rounded-pill px-5">
+                ✨ Dejar mi reseña
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ===== RESEÑAS EN LA PÁGINA PRINCIPAL ===== */
+    .card-resena-home {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .card-resena-home:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+    }
+    
+    .resena-foto-container-home {
+        margin-top: 12px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid var(--rosa-claro);
+        height: 200px;
+        width: 100%;
+    }
+    
+    .resena-foto-home {
+        width: 100%;
+        height: 200%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .card-resena-home:hover .resena-foto-home {
+        transform: scale(1.03);
+    }
+    
+    /* ===== RESEÑAS EN LA PÁGINA DE LISTA ===== */
+    .card-resena-lista {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .card-resena-lista:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+    }
+    
+    .resena-foto-container-lista {
+        margin-top: 15px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid var(--rosa-claro);
+        height: 200px;
+        width: 100%;
+    }
+    
+    .resena-foto-lista {
+        width: 100%;
+        height: 200%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .card-resena-lista:hover .resena-foto-lista {
+        transform: scale(1.05);
+    }
+    
+    /* ===== ELEMENTOS COMUNES ===== */
+    .stars {
+        color: #FFD700;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+    
+    .resena-text {
+        font-style: italic;
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        flex-grow: 1;
+    }
+    
+    .resena-autor {
+        font-weight: 600;
+        margin-top: 10px;
+        color: var(--texto-oscuro);
+    }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .resena-foto-container-home {
+            height: 100px;
+        }
+        
+        .resena-foto-container-lista {
+            height: 150px;
+        }
+        
+        .card-resena-home,
+        .card-resena-lista {
+            padding: 20px;
+        }
+    }
+</style>
+
+{% endblock %}

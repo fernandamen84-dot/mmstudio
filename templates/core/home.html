@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero-section">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="hero-title">
+                    Tus manos,<br>
+                    <span class="highlight">tu estilo,</span><br>
+                    tu momento. ✨
+                </h1>
+                <p class="hero-subtitle">
+                    En MM Studio convertimos tus ideas en arte para tus manos.
+                </p>
+                <div class="hero-buttons mt-4">
+                    <a href="#disenos" class="btn btn-primary btn-lg rounded-pill px-5 me-3">
+                        💅 Ver diseños
+                    </a>
+                    <a href="#cita" class="btn btn-outline-primary btn-lg rounded-pill px-5">
+                        📅 Agendar cita
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DISEÑOS -->
+<section id="disenos" class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">✨ Trabajos recientes</h2>
+        </div>
+        <div class="row g-4">
+            {% if disenos %}
+                {% for diseno in disenos %}
+                <div class="col-6 col-md-4">
+                    <div class="card-diseno">
+                        <div class="card-diseno-img">
+                            {% if diseno.imagen %}
+                                <img src="{{ diseno.imagen.url }}" alt="{{ diseno.nombre }}">
+                            {% else %}
+                                <div class="no-image">📸</div>
+                            {% endif %}
+                            <div class="card-diseno-overlay">
+                                <h5>{{ diseno.nombre }}</h5>
+                                <p>${{ diseno.precio }}</p>
+                                <a href="#cita" class="btn btn-light btn-sm rounded-pill">Quiero este ❤️</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>Pronto más diseños ✨</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios" class="section-padding bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">💎 Nuestros servicios</h2>
+        </div>
+        <div class="row g-4">
+            {% if servicios %}
+                {% for servicio in servicios %}
+                <div class="col-md-4">
+                    <div class="card-servicio">
+                        <div class="card-servicio-icon">💅</div>
+                        <h5>{{ servicio.nombre }}</h5>
+                        <p>{{ servicio.descripcion|truncatechars:80 }}</p>
+                        <p class="card-servicio-precio">${{ servicio.precio }}</p>
+                        <p><i class="far fa-clock"></i> {{ servicio.duracion }} min</p>
+                        <a href="#cita" class="btn btn-primary btn-sm rounded-pill px-4">Agendar</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>Pronto más servicios ✨</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- ===== SECCIÓN DESTACADA: CONFIGURADOR ===== -->
+<section class="section-padding configurador-destacado">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="configurador-destacado-contenido">                   
+                    <h2 class="section-title">🎨 Diseña tus uñas como tú quieras</h2>
+                    <p class="section-subtitle">
+                        Elige forma, color, diseño y largo. Mira cómo quedarían en tiempo real 
+                        y agenda tu cita con el diseño perfecto para ti.
+                    </p>
+                    <ul class="lista-caracteristicas">
+                        <li><i class="fas fa-check-circle" style="color: var(--rosa-pastel);"></i> 5 formas diferentes</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--rosa-pastel);"></i> 7 colores para elegir</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--rosa-pastel);"></i> 6 diseños exclusivos</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--rosa-pastel);"></i> Vista previa en tiempo real</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--rosa-pastel);"></i> Precio estimado automático</li>
+                    </ul>
+                    <a href="{% url 'disenar' %}" class="btn btn-primary btn-lg rounded-pill px-5 mt-3">
+                        🎨 Empezar a diseñar
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="configurador-preview">
+                    <div class="preview-mano">
+                        <div class="uña-preview" style="background: #FFB6C1; transform: rotate(-15deg);"></div>
+                        <div class="uña-preview" style="background: #FF69B4; transform: rotate(-5deg);"></div>
+                        <div class="uña-preview" style="background: #FF6B6B; transform: rotate(0deg);"></div>
+                        <div class="uña-preview" style="background: #C0C0C0; transform: rotate(5deg);"></div>
+                        <div class="uña-preview" style="background: #4A4A4A; transform: rotate(15deg);"></div>
+                    </div>
+                    <p class="text-muted mt-3">💅 Colores y formas que cambian en tiempo real</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- RESEÑAS EN LA PÁGINA PRINCIPAL -->
+<section id="resenas" class="section-padding">
+    <div class="container text-center">
+        <h2 class="section-title">⭐ Ellas ya vivieron la experiencia</h2>
+        <div class="row mt-4">
+            {% if resenas_aprobadas %}
+                {% for resena in resenas_aprobadas|slice:":3" %}
+                <div class="col-md-4">
+                    <div class="card-resena card-resena-home">
+                        <div class="stars">
+                            {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= resena.calificacion %}⭐{% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="resena-text">"{{ resena.comentario|truncatechars:80 }}"</p>
+                        <p class="resena-autor">— {{ resena.nombre }}</p>
+                        {% if resena.foto %}
+                            <div class="resena-foto-container-home">
+                                <img src="{{ resena.foto.url }}" alt="Foto de uñas" class="resena-foto-home">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <p class="text-muted">✨ Aún no hay reseñas. ¡Sé la primera!</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'ver_resenas' %}" class="btn btn-outline-primary rounded-pill px-5">
+                ✨ Ver todas las reseñas
+            </a>
+            <a href="{% url 'agregar_resena' %}" class="btn btn-primary rounded-pill px-5 ms-2">
+                ⭐ Dejar mi reseña
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section id="cita" class="section-padding cta-section">
+    <div class="container text-center">
+        <h2 class="cta-title">📅 ¿Lista para tu cita?</h2>
+        <p class="cta-subtitle">¡Te esperamos con los mejores diseños!</p>
+        <a href="{% url 'agendar' %}" class="btn btn-light btn-lg rounded-pill px-5">
+            📅 Agendar ahora
+        </a>
+    </div>
+</section>
+
+{% endblock %}

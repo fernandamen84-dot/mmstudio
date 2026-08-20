@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">⭐ Deja tu reseña</h2>
+                    <p class="section-subtitle">Cuéntanos cómo fue tu experiencia en MM Studio 💕</p>
+                </div>
+                
+                <!-- Mostrar mensajes -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible fade show" role="alert" style="border-radius: 16px; padding: 20px;">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3" style="font-size: 2rem;">
+                                    {% if message.tags == 'success' %}🎉{% else %}⚠️{% endif %}
+                                </div>
+                                <div>
+                                    <strong>{% if message.tags == 'success' %}¡Excelente!{% else %}¡Atención!{% endif %}</strong>
+                                    <br>
+                                    {{ message }}
+                                </div>
+                                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Formulario -->
+                <div class="card-form">
+                    <form method="POST" action="{% url 'agregar_resena' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <!-- Nombre -->
+                            <div class="col-md-12">
+                                <label for="nombre" class="form-label">👤 Tu nombre *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: María González" required>
+                            </div>
+                            
+                            <!-- Calificación -->
+                            <div class="col-md-12">
+                                <label class="form-label">⭐ Calificación *</label>
+                                <div class="calificacion-container">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="calificacion" id="star1" value="1">
+                                        <label class="form-check-label" for="star1">⭐</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="calificacion" id="star2" value="2">
+                                        <label class="form-check-label" for="star2">⭐⭐</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="calificacion" id="star3" value="3">
+                                        <label class="form-check-label" for="star3">⭐⭐⭐</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="calificacion" id="star4" value="4" checked>
+                                        <label class="form-check-label" for="star4">⭐⭐⭐⭐</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="calificacion" id="star5" value="5">
+                                        <label class="form-check-label" for="star5">⭐⭐⭐⭐⭐</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Comentario -->
+                            <div class="col-md-12">
+                                <label for="comentario" class="form-label">💬 Tu comentario *</label>
+                                <textarea class="form-control" id="comentario" name="comentario" rows="4" placeholder="Cuéntanos cómo fue tu experiencia..." required></textarea>
+                            </div>
+                            
+                            <!-- Foto -->
+                            <div class="col-md-12">
+                                <label for="foto" class="form-label">📷 Foto de tus uñas</label>
+                                <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                                <small class="text-muted">Sube una foto de tus uñas (opcional)</small>
+                            </div>
+                            
+                            <!-- Botón -->
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5">
+                                    ⭐ Enviar reseña
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .card-form {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+    
+    .form-control, .form-select {
+        border-radius: 12px;
+        border: 2px solid #f0f0f0;
+        padding: 12px 16px;
+        transition: all 0.3s;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: var(--rosa-pastel);
+        box-shadow: 0 0 0 4px rgba(255, 182, 193, 0.2);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: var(--texto-oscuro);
+    }
+    
+    .calificacion-container {
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-radius: 12px;
+        border: 2px solid #f0f0f0;
+    }
+    
+    .calificacion-container .form-check-label {
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .calificacion-container .form-check-label:hover {
+        transform: scale(1.2);
+    }
+    
+    .calificacion-container .form-check-input:checked + .form-check-label {
+        transform: scale(1.2);
+    }
+</style>
+
+{% endblock %}

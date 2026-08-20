@@ -1,0 +1,420 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-padding configurador-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">🎨 Diseña tus uñas</h2>
+            <p class="section-subtitle">Elige forma, color y diseño para crear tu estilo único 💕</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Columna izquierda: Opciones -->
+            <div class="col-lg-5">
+                <div class="configurador-panel">
+                    
+                    <!-- FORMA -->
+                    <div class="config-group">
+                        <h5><i class="fas fa-hand-peace"></i> Forma</h5>
+                        <div class="btn-group-opciones" id="forma-container">
+                            <button class="btn-opcion active" data-value="almendra">
+                                <span>🌰</span> Almendra
+                            </button>
+                            <button class="btn-opcion" data-value="cuadrada">
+                                <span>⬜</span> Cuadrada
+                            </button>
+                            <button class="btn-opcion" data-value="coffin">
+                                <span>⚰️</span> Coffin
+                            </button>
+                            <button class="btn-opcion" data-value="ovalada">
+                                <span>🥚</span> Ovalada
+                            </button>
+                            <button class="btn-opcion" data-value="stiletto">
+                                <span>🗡️</span> Stiletto
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- COLOR -->
+                    <div class="config-group">
+                        <h5><i class="fas fa-palette"></i> Color</h5>
+                        <div class="btn-group-opciones" id="color-container">
+                            <button class="btn-opcion active" data-value="#FFB6C1" style="background: #FFB6C1;">Rosa pastel</button>
+                            <button class="btn-opcion" data-value="#FF69B4" style="background: #FF69B4;">Rosa fuerte</button>
+                            <button class="btn-opcion" data-value="#FF6B6B" style="background: #FF6B6B;">Rojo</button>
+                            <button class="btn-opcion" data-value="#4A4A4A" style="background: #4A4A4A; color: white;">Negro</button>
+                            <button class="btn-opcion" data-value="#F5E6D3" style="background: #F5E6D3;">Nude</button>
+                            <button class="btn-opcion" data-value="#C0C0C0" style="background: #C0C0C0;">Chrome</button>
+                            <button class="btn-opcion" data-value="#FFD700" style="background: #FFD700;">Dorado</button>
+                        </div>
+                    </div>
+                    
+                    <!-- DISEÑO -->
+                    <div class="config-group">
+                        <h5><i class="fas fa-sparkles"></i> Diseño</h5>
+                        <div class="btn-group-opciones" id="diseno-container">
+                            <button class="btn-opcion active" data-value="none">✨ Sin diseño</button>
+                            <button class="btn-opcion" data-value="flores">🌸 Flores</button>
+                            <button class="btn-opcion" data-value="glitter">✨ Glitter</button>
+                            <button class="btn-opcion" data-value="francesa">🤍 Francesa</button>
+                            <button class="btn-opcion" data-value="corazones">❤️ Corazones</button>
+                            <button class="btn-opcion" data-value="mariposas">🦋 Mariposas</button>
+                        </div>
+                    </div>
+                    
+                    <!-- LARGO -->
+                    <div class="config-group">
+                        <h5><i class="fas fa-ruler"></i> Largo</h5>
+                        <div class="btn-group-opciones" id="largo-container">
+                            <button class="btn-opcion" data-value="corto">Corto</button>
+                            <button class="btn-opcion active" data-value="mediano">Mediano</button>
+                            <button class="btn-opcion" data-value="largo">Largo</button>
+                        </div>
+                    </div>
+                    
+                    <!-- RESUMEN Y BOTÓN -->
+                    <div class="config-resumen mt-4">
+                        <div class="resumen-box">
+                            <p><strong>✨ Tu diseño:</strong></p>
+                            <p id="resumen-texto">Almendra + Rosa pastel + Sin diseño</p>
+                            <p class="precio-estimado">💰 Precio estimado: <span id="precio-estimado">$350</span> MXN</p>
+                        </div>
+                        <a href="{% url 'agendar' %}" class="btn btn-primary btn-lg rounded-pill w-100 mt-3">
+                            📅 Agendar este diseño
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Columna derecha: Vista previa -->
+            <div class="col-lg-7">
+                <div class="vista-previa">
+                    <div class="vista-previa-container">
+                        <h5 class="text-center mb-3">🖐️ Vista previa de tus uñas</h5>
+                        
+                        <!-- Las uñas se dibujarán aquí con CSS/JavaScript -->
+                        <div class="mano-container">
+                            <div class="uña uña-pulgar" style="--color: #FFB6C1; --forma: almendra;"></div>
+                            <div class="uña uña-indice" style="--color: #FFB6C1; --forma: almendra;"></div>
+                            <div class="uña uña-medio" style="--color: #FFB6C1; --forma: almendra;"></div>
+                            <div class="uña uña-anular" style="--color: #FFB6C1; --forma: almendra;"></div>
+                            <div class="uña uña-menique" style="--color: #FFB6C1; --forma: almendra;"></div>
+                        </div>
+                        
+                        <p class="text-muted text-center mt-3 small">
+                            💡 Haz clic en las opciones para ver cómo se vería tu diseño
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ===== CONFIGURADOR ===== */
+    .configurador-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffe4e1 100%);
+        min-height: 100vh;
+    }
+    
+    .configurador-panel {
+        background: white;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+    
+    .config-group {
+        margin-bottom: 25px;
+    }
+    
+    .config-group h5 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #2D2D2D;
+    }
+    
+    .btn-group-opciones {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .btn-opcion {
+        padding: 8px 16px;
+        border: 2px solid #f0f0f0;
+        border-radius: 50px;
+        background: white;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .btn-opcion:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    
+    .btn-opcion.active {
+        border-color: var(--rosa-pastel);
+        background: var(--rosa-pastel);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+    }
+    
+    .btn-opcion span {
+        font-size: 1.2rem;
+        margin-right: 4px;
+    }
+    
+    .resumen-box {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 16px;
+        border: 2px dashed var(--rosa-pastel);
+    }
+    
+    .resumen-box p {
+        margin-bottom: 5px;
+    }
+    
+    .precio-estimado {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--rosa-pastel);
+    }
+    
+    /* ===== VISTA PREVIA ===== */
+    .vista-previa {
+        background: white;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        height: 100%;
+    }
+    
+    .vista-previa-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .mano-container {
+        flex: 1;
+        position: relative;
+        min-height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 20px;
+        background: linear-gradient(180deg, #f5e6d3 0%, #fce4ec 100%);
+        border-radius: 20px;
+    }
+    
+    .uña {
+        width: 60px;
+        height: 80px;
+        background: var(--color, #FFB6C1);
+        border-radius: 20px 20px 5px 5px;
+        margin: 0 8px;
+        transition: all 0.5s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    
+    /* Formas */
+    .uña[style*="--forma: almendra"] {
+        border-radius: 40% 40% 15% 15% / 60% 60% 15% 15%;
+    }
+    
+    .uña[style*="--forma: cuadrada"] {
+        border-radius: 5px 5px 5px 5px;
+    }
+    
+    .uña[style*="--forma: coffin"] {
+        border-radius: 10px 10px 3px 3px;
+        clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%);
+    }
+    
+    .uña[style*="--forma: ovalada"] {
+        border-radius: 50% 50% 20% 20%;
+    }
+    
+    .uña[style*="--forma: stiletto"] {
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        border-radius: 0;
+    }
+    
+    /* Posiciones de los dedos */
+    .uña-pulgar { transform: rotate(-15deg) translateY(20px); }
+    .uña-indice { transform: rotate(-5deg) translateY(10px); }
+    .uña-medio { transform: rotate(0deg); }
+    .uña-anular { transform: rotate(5deg) translateY(10px); }
+    .uña-menique { transform: rotate(15deg) translateY(20px); }
+    
+    /* Diseños */
+    .uña[style*="--diseno: flores"]::after {
+        content: '🌸';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+    }
+    
+    .uña[style*="--diseno: glitter"]::after {
+        content: '✨';
+        position: absolute;
+        top: 30%;
+        right: 20%;
+        font-size: 16px;
+        animation: sparkle 1s infinite;
+    }
+    
+    .uña[style*="--diseno: glitter"]::before {
+        content: '✨';
+        position: absolute;
+        bottom: 30%;
+        left: 20%;
+        font-size: 12px;
+        animation: sparkle 1.5s infinite;
+    }
+    
+    .uña[style*="--diseno: francesa"] {
+        background: linear-gradient(to bottom, #FFF 30%, var(--color) 30%);
+        border-radius: 50% 50% 10% 10% / 60% 60% 10% 10%;
+    }
+    
+    .uña[style*="--diseno: corazones"]::after {
+        content: '❤️';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 18px;
+    }
+    
+    .uña[style*="--diseno: mariposas"]::after {
+        content: '🦋';
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 18px;
+    }
+    
+    @keyframes sparkle {
+        0%, 100% { opacity: 0.5; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .btn-opcion {
+            font-size: 0.75rem;
+            padding: 6px 12px;
+        }
+        
+        .uña {
+            width: 40px;
+            height: 60px;
+            margin: 0 4px;
+        }
+        
+        .mano-container {
+            min-height: 200px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let selectedForma = 'almendra';
+        let selectedColor = '#FFB6C1';
+        let selectedDiseno = 'none';
+        let selectedLargo = 'mediano';
+        
+        const resumenTexto = document.getElementById('resumen-texto');
+        const precioEstimado = document.getElementById('precio-estimado');
+        const uñas = document.querySelectorAll('.uña');
+        
+        // Precios base por servicio
+        const precios = {
+            'corto': 300,
+            'mediano': 350,
+            'largo': 400
+        };
+        
+        const preciosDiseno = {
+            'none': 0,
+            'flores': 50,
+            'glitter': 40,
+            'francesa': 30,
+            'corazones': 60,
+            'mariposas': 70
+        };
+        
+        // Función para actualizar la vista
+        function actualizarVista() {
+            // Actualizar cada uña
+            uñas.forEach(uña => {
+                uña.style.setProperty('--color', selectedColor);
+                uña.style.setProperty('--forma', selectedForma);
+                uña.style.setProperty('--diseno', selectedDiseno);
+            });
+            
+            // Actualizar resumen
+            const nombreForma = document.querySelector('#forma-container .btn-opcion.active')?.textContent.trim() || 'Almendra';
+            const nombreColor = document.querySelector('#color-container .btn-opcion.active')?.textContent.trim() || 'Rosa pastel';
+            const nombreDiseno = document.querySelector('#diseno-container .btn-opcion.active')?.textContent.trim() || 'Sin diseño';
+            
+            resumenTexto.textContent = `${nombreForma} + ${nombreColor} + ${nombreDiseno}`;
+            
+            // Calcular precio
+            const precioBase = precios[selectedLargo] || 350;
+            const precioExtra = preciosDiseno[selectedDiseno] || 0;
+            const total = precioBase + precioExtra;
+            precioEstimado.textContent = `$${total}`;
+        }
+        
+        // Configurar eventos para los botones
+        document.querySelectorAll('.btn-group-opciones').forEach(container => {
+            container.querySelectorAll('.btn-opcion').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Desactivar todos los botones del grupo
+                    container.querySelectorAll('.btn-opcion').forEach(b => b.classList.remove('active'));
+                    // Activar este botón
+                    this.classList.add('active');
+                    
+                    // Actualizar selección según el grupo
+                    const grupoId = container.id;
+                    const valor = this.dataset.value;
+                    
+                    if (grupoId === 'forma-container') {
+                        selectedForma = valor;
+                    } else if (grupoId === 'color-container') {
+                        selectedColor = valor;
+                    } else if (grupoId === 'diseno-container') {
+                        selectedDiseno = valor;
+                    } else if (grupoId === 'largo-container') {
+                        selectedLargo = valor;
+                    }
+                    
+                    actualizarVista();
+                });
+            });
+        });
+        
+        // Actualizar vista inicial
+        actualizarVista();
+    });
+</script>
+
+{% endblock %}

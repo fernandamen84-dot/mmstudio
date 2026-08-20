@@ -1,0 +1,48 @@
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Cita
+from catalogo.models import Servicio, Diseno
+
+def agendar_cita(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        telefono = request.POST.get('telefono')
+        instagram = request.POST.get('instagram', '')
+        servicio_id = request.POST.get('servicio')
+        diseno_id = request.POST.get('diseno')
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+        notas = request.POST.get('notas', '')
+        
+        # Validar que todos los campos requeridos estén llenos
+        if not all([nombre, telefono, servicio_id, fecha, hora]):
+            messages.error(request, '❌ Por favor llena todos los campos requeridos.')
+            return redirect('agendar')
+        
+        # Crear la cita
+        cita = Cita(
+            nombre=nombre,
+            telefono=telefono,
+            instagram=instagram,
+            servicio_id=servicio_id,
+            diseno_id=diseno_id if diseno_id else None,
+            fecha=fecha,
+            hora=hora,
+            notas=notas
+        )
+        cita.save()
+        
+        # Mensaje de éxito
+        messages.success(request, f'✨ ¡Cita agendada con éxito! Te esperamos el {fecha} a las {hora}. Te enviaremos confirmación por WhatsApp 💕')
+        
+        # Redirigir a la página de agendar pero con mensaje
+        return redirect('agendar')
+    
+    # GET - Mostrar el formulario
+    servicios = Servicio.objects.filter(activo=True)
+    disenos = Diseno.objects.filter(activo=True)
+    
+    return render(request, 'citas/agendar.html', {
+        'servicios': servicios,
+        'disenos': disenos,
+    })

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">📅 Agenda tu cita</h2>
+                    <p class="section-subtitle">Completa el formulario y te esperamos en MM Studio 💕</p>
+                </div>
+                
+                <!-- ===== MOSTRAR MENSAJES ===== -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible fade show" role="alert" style="border-radius: 16px; padding: 20px;">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3" style="font-size: 2rem;">
+                                    {% if message.tags == 'success' %}🎉{% else %}⚠️{% endif %}
+                                </div>
+                                <div>
+                                    <strong>{% if message.tags == 'success' %}¡Excelente!{% else %}¡Atención!{% endif %}</strong>
+                                    <br>
+                                    {{ message }}
+                                </div>
+                                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- ===== FORMULARIO ===== -->
+                <div class="card-form">
+                    <form method="POST" action="{% url 'agendar' %}">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label">👤 Nombre completo *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: María González" required>
+                            </div>
+                            
+                            <!-- Teléfono -->
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label">📱 Teléfono *</label>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="722 123 4567" required>
+                            </div>
+                            
+                            <!-- Instagram -->
+                            <div class="col-md-12">
+                                <label for="instagram" class="form-label">📷 Instagram</label>
+                                <input type="text" class="form-control" id="instagram" name="instagram" placeholder="@mm_studio24">
+                            </div>
+                            
+                            <!-- Servicio -->
+                            <div class="col-md-6">
+                                <label for="servicio" class="form-label">💅 Servicio *</label>
+                                <select class="form-select" id="servicio" name="servicio" required>
+                                    <option value="">Selecciona un servicio</option>
+                                    {% for servicio in servicios %}
+                                        <option value="{{ servicio.id }}">{{ servicio.nombre }} - ${{ servicio.precio }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <!-- Diseño -->
+                            <div class="col-md-6">
+                                <label for="diseno" class="form-label">🎨 Diseño (opcional)</label>
+                                <select class="form-select" id="diseno" name="diseno">
+                                    <option value="">Sin diseño específico</option>
+                                    {% for diseno in disenos %}
+                                        <option value="{{ diseno.id }}">{{ diseno.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <!-- Fecha -->
+                            <div class="col-md-6">
+                                <label for="fecha" class="form-label">📅 Fecha *</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            </div>
+                            
+                            <!-- Hora -->
+                            <div class="col-md-6">
+                                <label for="hora" class="form-label">🕐 Hora *</label>
+                                <input type="time" class="form-control" id="hora" name="hora" required>
+                            </div>
+                            
+                            <!-- Notas -->
+                            <div class="col-md-12">
+                                <label for="notas" class="form-label">📝 Notas adicionales</label>
+                                <textarea class="form-control" id="notas" name="notas" rows="3" placeholder="Ej: Me gustaría el diseño con flores, tengo alergia a ciertos productos, etc."></textarea>
+                            </div>
+                            
+                            <!-- Botón -->
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5" id="btnAgendar">
+                                    ✨ Confirmar cita
+                                </button>
+                                <p class="text-muted mt-3 small">
+                                    💬 Te enviaremos la confirmación por WhatsApp
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .card-form {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+    
+    .form-control, .form-select {
+        border-radius: 12px;
+        border: 2px solid #f0f0f0;
+        padding: 12px 16px;
+        transition: all 0.3s;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: var(--rosa-pastel);
+        box-shadow: 0 0 0 4px rgba(255, 182, 193, 0.2);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: var(--texto-oscuro);
+    }
+    
+    /* Animación del botón */
+    #btnAgendar {
+        transition: all 0.3s ease;
+    }
+    
+    #btnAgendar:active {
+        transform: scale(0.95);
+    }
+</style>
+
+<!-- JavaScript para animación al enviar -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const btn = document.getElementById('btnAgendar');
+        
+        form.addEventListener('submit', function() {
+            btn.innerHTML = '⏳ Enviando...';
+            btn.disabled = true;
+        });
+    });
+</script>
+
+{% endblock %}
