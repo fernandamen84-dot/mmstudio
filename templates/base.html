@@ -35,39 +35,68 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <!-- Enlaces públicos -->
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#disenos">✨ Diseños</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#servicios">💎 Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'ver_resenas' %}">⭐ Reseñas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'disenar' %}">🎨 Diseña</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#ubicacion">📍 Ubicación</a></li>
                     
-                    <!-- ⭐ AUTENTICACIÓN ⭐ -->
-                    {% if user.is_authenticated %}
+                    <!-- ========================================== -->
+                    <!-- 🔹 ENLACES PARA CLIENTAS (siempre visibles) -->
+                    <!-- ========================================== -->
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#disenos">✨ Diseños</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#servicios">💎 Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'ver_resenas' %}">⭐ Reseñas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'disenar' %}">🎨 Diseña</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#ubicacion">📍 Ubicación</a></li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}" style="color: #FF69B4 !important; font-weight: 600;">
-                                👑 Admin
+                            <a class="btn btn-primary btn-sm rounded-pill px-4" href="{% url 'agendar' %}">
+                                📅 Agendar
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}" style="color: #999 !important;">
-                                🚪 Salir
-                            </a>
-                        </li>
-                    {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}" style="color: #999 !important;">
                                 🔑 Iniciar sesión
                             </a>
                         </li>
+                    
+                    <!-- ========================================== -->
+                    <!-- 🔹 ENLACES PARA ADMIN (tu hermana) -->
+                    <!-- ========================================== -->
+                    {% else %}
+                        <!-- Menú de Administración -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard' %}" style="color: #FF69B4 !important; font-weight: 600;">
+                                👑 Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'gestionar_citas' %}">
+                                📅 Citas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'gestionar_resenas' %}">
+                                ⭐ Reseñas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'agregar_diseno' %}">
+                                💅 Nuevo diseño
+                            </a>
+                        </li>
+                        
+                        <!-- Enlace para ver la página como clienta -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}" style="color: #999 !important;">
+                                🏠 Ver página
+                            </a>
+                        </li>
+                        
+                        <!-- Cerrar sesión -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}" style="color: #999 !important;">
+                                🚪 Salir
+                            </a>
+                        </li>
                     {% endif %}
                     
-                    <!-- Botón agendar -->
-                    <li class="nav-item">
-                        <a class="btn btn-primary btn-sm rounded-pill px-4" href="{% url 'agendar' %}">
-                            📅 Agendar
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
