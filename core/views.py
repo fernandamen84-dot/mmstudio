@@ -18,7 +18,10 @@ def home(request):
 @login_required
 def dashboard(request):
     """Panel administrativo para tu hermana"""
-    citas_hoy = Cita.objects.filter(fecha__date='2026-08-20')  # Cambiar por fecha actual
+    from datetime import date
+    hoy = date.today()
+    
+    citas_hoy = Cita.objects.filter(fecha=hoy)
     citas_pendientes = Cita.objects.filter(estado='pendiente')
     citas_confirmadas = Cita.objects.filter(estado='confirmada')
     resenas_pendientes = Resena.objects.filter(aprobada=False)
