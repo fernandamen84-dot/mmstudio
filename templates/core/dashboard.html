@@ -45,38 +45,41 @@
             </div>
         </div>
         
-        <!-- Acciones rápidas -->
+        <!-- ⭐ ACCIONES RÁPIDAS (AHORA VAN AL DASHBOARD, NO AL ADMIN DE DJANGO) ⭐ -->
         <div class="row g-4 mt-4">
             <div class="col-md-4">
                 <div class="action-card">
-                    <h5>📅 Citas pendientes</h5>
-                    <p>Tienes <strong>{{ citas_pendientes.count }}</strong> citas por confirmar</p>
-                    <a href="/admin/citas/cita/" class="btn btn-primary btn-sm rounded-pill px-4">Ver citas</a>
+                    <h5>📅 Gestionar citas</h5>
+                    <p>Tienes <strong>{{ citas_pendientes.count }}</strong> citas pendientes</p>
+                    <a href="{% url 'gestionar_citas' %}" class="btn btn-primary btn-sm rounded-pill px-4">
+                        📋 Ver citas
+                    </a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="action-card">
-                    <h5>⭐ Reseñas por aprobar</h5>
+                    <h5>⭐ Gestionar reseñas</h5>
                     <p>Tienes <strong>{{ resenas_pendientes.count }}</strong> reseñas pendientes</p>
-                    <a href="/admin/resenas/resena/" class="btn btn-primary btn-sm rounded-pill px-4">Aprobar</a>
+                    <a href="{% url 'gestionar_resenas' %}" class="btn btn-primary btn-sm rounded-pill px-4">
+                        👀 Revisar
+                    </a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="action-card">
                     <h5>💅 Agregar diseño</h5>
                     <p>{{ total_disenos }} diseños en tu catálogo</p>
-                    <a href="/admin/catalogo/diseno/add/" class="btn btn-primary btn-sm rounded-pill px-4">Nuevo diseño</a>
+                    <a href="{% url 'agregar_diseno' %}" class="btn btn-primary btn-sm rounded-pill px-4">
+                        ✨ Nuevo
+                    </a>
                 </div>
             </div>
         </div>
         
-        <!-- Enlace para salir del admin -->
+        <!-- Botones de navegación -->
         <div class="row mt-5">
             <div class="col-12 text-center">
-                <a href="/admin/" class="btn btn-outline-secondary rounded-pill px-4">
-                    🔐 Ir al admin de Django
-                </a>
-                <a href="{% url 'home' %}" class="btn btn-outline-primary rounded-pill px-4 ms-2">
+                <a href="{% url 'home' %}" class="btn btn-outline-primary rounded-pill px-4">
                     🏠 Ver página
                 </a>
             </div>
@@ -106,21 +109,9 @@
         box-shadow: 0 15px 45px rgba(0,0,0,0.1);
     }
     
-    .stat-icon {
-        font-size: 2rem;
-        margin-bottom: 5px;
-    }
-    
-    .stat-number {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--rosa-pastel);
-    }
-    
-    .stat-label {
-        font-size: 0.85rem;
-        color: #888;
-    }
+    .stat-icon { font-size: 2rem; margin-bottom: 5px; }
+    .stat-number { font-size: 2rem; font-weight: 700; color: var(--rosa-pastel); }
+    .stat-label { font-size: 0.85rem; color: #888; }
     
     .action-card {
         background: white;
@@ -143,19 +134,9 @@
         margin-bottom: 10px;
     }
     
-    .action-card p {
-        color: #666;
-        margin-bottom: 15px;
-    }
-    
     @media (max-width: 768px) {
-        .stat-number {
-            font-size: 1.5rem;
-        }
-        
-        .stat-card {
-            padding: 15px 10px;
-        }
+        .stat-number { font-size: 1.5rem; }
+        .stat-card { padding: 15px 10px; }
     }
 </style>
 
