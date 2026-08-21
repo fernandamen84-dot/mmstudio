@@ -27,6 +27,8 @@ from configurador import views as configurador_views
 from catalogo import views as catalogo_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 # --- CÓDIGO PARA CREAR EL ADMIN AUTOMÁTICAMENTE AL ARRANCAR ---
 try:
@@ -51,8 +53,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     
     # ⭐ AUTENTICACIÓN ⭐
-    path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('login/', LoginView.as_view(template_name='core/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     
     # Clientes
     path('agendar/', citas_views.agendar_cita, name='agendar'),
