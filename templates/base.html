@@ -35,25 +35,34 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <!-- Enlaces a secciones de la página principal -->
+                    <!-- Enlaces públicos -->
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#disenos">✨ Diseños</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#servicios">💎 Servicios</a></li>
-                    
-                    <!-- Enlace a la página de reseñas -->
                     <li class="nav-item"><a class="nav-link" href="{% url 'ver_resenas' %}">⭐ Reseñas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'disenar' %}">🎨 Diseña</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#ubicacion">📍 Ubicación</a></li>
                     
-                    <!-- ⭐ NUEVO: Enlace al Dashboard (solo para admin) ⭐ -->
+                    <!-- ⭐ AUTENTICACIÓN ⭐ -->
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}">
+                            <a class="nav-link" href="{% url 'dashboard' %}" style="color: #FF69B4 !important; font-weight: 600;">
                                 👑 Admin
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}" style="color: #999 !important;">
+                                🚪 Salir
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}" style="color: #999 !important;">
+                                🔑 Iniciar sesión
                             </a>
                         </li>
                     {% endif %}
                     
-                    <!-- Botón de agendar -->
+                    <!-- Botón agendar -->
                     <li class="nav-item">
                         <a class="btn btn-primary btn-sm rounded-pill px-4" href="{% url 'agendar' %}">
                             📅 Agendar
@@ -92,7 +101,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
     
-    <!-- Registro del Service Worker para PWA -->
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('{% static 'sw.js' %}')
