@@ -14,7 +14,7 @@ from django.conf.urls.static import static
 try:
     from django.contrib.auth import get_user_model
     User = get_user_model()
-    
+
     username = 'mmstudio'
     email = 'mmstudio@example.com'
     password = 'mmstudio2024'
@@ -30,17 +30,17 @@ except Exception as e:
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    
+
     # Autenticacion
     path('login/', LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
-    
+
     # Clientes
     path('agendar/', citas_views.agendar_cita, name='agendar'),
     path('resenas/', resenas_views.ver_resenas, name='ver_resenas'),
     path('resenas/agregar/', resenas_views.agregar_resena, name='agregar_resena'),
     path('disenar/', configurador_views.disenar_uñas, name='disenar'),
-    
+
     # Dashboard - Panel de control para tu hermana
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/citas/', citas_views.gestionar_citas, name='gestionar_citas'),
