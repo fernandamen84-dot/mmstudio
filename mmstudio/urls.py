@@ -13,13 +13,10 @@ Class-based views
 Including another URLconf
     1. Add the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-URL configuration for mmstudio project.
-"""
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
-from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LoginView, LogoutView
 from core import views
 from citas import views as citas_views
 from resenas import views as resenas_views
@@ -27,8 +24,6 @@ from configurador import views as configurador_views
 from catalogo import views as catalogo_views
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LoginView, LogoutView
-
 
 # --- CÓDIGO PARA CREAR EL ADMIN AUTOMÁTICAMENTE AL ARRANCAR ---
 try:
@@ -52,7 +47,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     
-    # ⭐ AUTENTICACIÓN ⭐
+    # Autenticación
     path('login/', LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     
@@ -62,7 +57,7 @@ urlpatterns = [
     path('resenas/agregar/', resenas_views.agregar_resena, name='agregar_resena'),
     path('disenar/', configurador_views.disenar_uñas, name='disenar'),
     
-    # ⭐ DASHBOARD - Panel de control para tu hermana ⭐
+    # Dashboard - Panel de control para tu hermana
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/citas/', citas_views.gestionar_citas, name='gestionar_citas'),
     path('dashboard/citas/<int:cita_id>/<str:estado>/', citas_views.cambiar_estado_cita, name='cambiar_estado_cita'),
@@ -77,5 +72,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Handler para errores 500
+def handler500(request, *args, **kwargs):
+    return HttpResponse("Error 500 - Revisa los logs para más detalles.")
 def handler500(request, *args, **kwargs):
     return HttpResponse("Error 500 - Revisa los logs para más detalles.")
