@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from catalogo.models import Diseno, Servicio
 from citas.models import Cita
 from resenas.models import Resena
+from datetime import date
 
 def home(request):
     disenos = Diseno.objects.filter(activo=True)[:6]
@@ -18,7 +19,6 @@ def home(request):
 @login_required
 def dashboard(request):
     """Panel administrativo para tu hermana"""
-    from datetime import date
     hoy = date.today()
     
     citas_hoy = Cita.objects.filter(fecha=hoy)
