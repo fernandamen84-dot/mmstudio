@@ -1,18 +1,3 @@
-"""
-URL configuration for mmstudio project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Add the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
@@ -25,7 +10,7 @@ from catalogo import views as catalogo_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# --- CÓDIGO PARA CREAR EL ADMIN AUTOMÁTICAMENTE AL ARRANCAR ---
+# --- CODIGO PARA CREAR EL ADMIN AUTOMATICAMENTE AL ARRANCAR ---
 try:
     from django.contrib.auth import get_user_model
     User = get_user_model()
@@ -36,18 +21,17 @@ try:
 
     if not User.objects.filter(username=username).exists():
         User.objects.create_superuser(username, email, password)
-        print("✅ ¡ÉXITO! Superusuario 'mmstudio' creado desde urls.py.")
+        print("SUPERUSUARIO CREADO: mmstudio / mmstudio2024")
     else:
-        print("ℹ️ El superusuario 'mmstudio' ya existe en la BD.")
+        print("El superusuario mmstudio ya existe")
 except Exception as e:
-    print(f"⚠️ Aviso: No se pudo crear el superusuario. Error: {e}")
-# --- FIN: CÓDIGO PARA CREAR EL ADMIN ---
+    print(f"No se pudo crear el superusuario: {e}")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     
-    # Autenticación
+    # Autenticacion
     path('login/', LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     
@@ -67,12 +51,8 @@ urlpatterns = [
     path('dashboard/diseno/nuevo/', catalogo_views.agregar_diseno, name='agregar_diseno'),
 ]
 
-# Solo en desarrollo
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Handler para errores 500
 def handler500(request, *args, **kwargs):
-    return HttpResponse("Error 500 - Revisa los logs para más detalles.")
-def handler500(request, *args, **kwargs):
-    return HttpResponse("Error 500 - Revisa los logs para más detalles.")
+    return HttpResponse("Error 500 - Revisa los logs para mas detalles.")
