@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-padding dashboard-section">
+    <div class="container">
+        <h2>⭐ Gestionar Reseñas</h2>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">← Volver</a>
+        <hr>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <h4>⏳ Pendientes ({{ resenas_pendientes.count }})</h4>
+        <div class="row g-3">
+            {% for resena in resenas_pendientes %}
+            <div class="col-md-4">
+                <div class="resena-card">
+                    <div class="stars">{% for i in "12345"|make_list %}{% if forloop.counter <= resena.calificacion %}⭐{% endif %}{% endfor %}</div>
+                    <p><strong>{{ resena.nombre }}</strong></p>
+                    <p>"{{ resena.comentario|truncatechars:80 }}"</p>
+                    <a href="{% url 'aprobar_resena' resena.id %}" class="btn btn-success btn-sm">✅ Aprobar</a>
+                    <a href="{% url 'eliminar_resena' resena.id %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">✨ No hay reseñas pendientes</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    .resena-card {
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+    .stars { color: #FFD700; font-size: 1.2rem; }
+</style>
+
+{% endblock %}
