@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-padding">
+    <div class="container">
+        <h2>💅 Agregar nuevo diseño</h2>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">← Volver</a>
+        <hr>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <div class="card-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label>Nombre *</label>
+                        <input type="text" name="nombre" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Categoría</label>
+                        <input type="text" name="categoria" class="form-control" placeholder="Ej: Chrome, Flores, etc.">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Precio *</label>
+                        <input type="number" name="precio" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Servicio *</label>
+                        <select name="servicio" class="form-select" required>
+                            <option value="">Selecciona...</option>
+                            {% for servicio in servicios %}
+                                <option value="{{ servicio.id }}">{{ servicio.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Descripción</label>
+                        <textarea name="descripcion" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Imagen</label>
+                        <input type="file" name="imagen" class="form-control" accept="image/*">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">💾 Guardar diseño</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    .card-form {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+</style>
+
+{% endblock %}
