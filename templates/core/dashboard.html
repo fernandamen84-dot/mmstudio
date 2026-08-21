@@ -9,33 +9,34 @@
             <div class="col-12">
                 <h2 class="section-title">👑 Panel de Control</h2>
                 <p class="section-subtitle">Bienvenida, administradora de MM Studio 💕</p>
+                <hr>
             </div>
         </div>
         
         <!-- Estadísticas -->
         <div class="row g-4 mt-3">
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card">
                     <div class="stat-icon">📅</div>
                     <div class="stat-number">{{ total_citas }}</div>
                     <div class="stat-label">Citas totales</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card">
                     <div class="stat-icon">⏳</div>
                     <div class="stat-number">{{ citas_pendientes.count }}</div>
                     <div class="stat-label">Pendientes</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card">
                     <div class="stat-icon">⭐</div>
                     <div class="stat-number">{{ total_resenas }}</div>
                     <div class="stat-label">Reseñas</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card">
                     <div class="stat-icon">💅</div>
                     <div class="stat-number">{{ total_disenos }}</div>
@@ -50,22 +51,34 @@
                 <div class="action-card">
                     <h5>📅 Citas pendientes</h5>
                     <p>Tienes <strong>{{ citas_pendientes.count }}</strong> citas por confirmar</p>
-                    <a href="/admin/citas/cita/" class="btn btn-primary btn-sm">Ver citas</a>
+                    <a href="/admin/citas/cita/" class="btn btn-primary btn-sm rounded-pill px-4">Ver citas</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="action-card">
-                    <h5>⭐ Reseñas</h5>
-                    <p>Tienes <strong>{{ resenas_pendientes.count }}</strong> reseñas por aprobar</p>
-                    <a href="/admin/resenas/resena/" class="btn btn-primary btn-sm">Aprobar reseñas</a>
+                    <h5>⭐ Reseñas por aprobar</h5>
+                    <p>Tienes <strong>{{ resenas_pendientes.count }}</strong> reseñas pendientes</p>
+                    <a href="/admin/resenas/resena/" class="btn btn-primary btn-sm rounded-pill px-4">Aprobar</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="action-card">
-                    <h5>💅 Diseños</h5>
+                    <h5>💅 Agregar diseño</h5>
                     <p>{{ total_disenos }} diseños en tu catálogo</p>
-                    <a href="/admin/catalogo/diseno/add/" class="btn btn-primary btn-sm">Agregar diseño</a>
+                    <a href="/admin/catalogo/diseno/add/" class="btn btn-primary btn-sm rounded-pill px-4">Nuevo diseño</a>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Enlace para salir del admin -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="/admin/" class="btn btn-outline-secondary rounded-pill px-4">
+                    🔐 Ir al admin de Django
+                </a>
+                <a href="{% url 'home' %}" class="btn btn-outline-primary rounded-pill px-4 ms-2">
+                    🏠 Ver página
+                </a>
             </div>
         </div>
     </div>
@@ -74,55 +87,75 @@
 <style>
     .dashboard-section {
         background: #f8f9fa;
-        min-height: 100vh;
+        min-height: 80vh;
+        padding-top: 40px;
     }
     
     .stat-card {
         background: white;
-        padding: 25px;
-        border-radius: 20px;
+        padding: 20px 15px;
+        border-radius: 16px;
         text-align: center;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.06);
         transition: all 0.3s;
+        height: 100%;
     }
     
     .stat-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        box-shadow: 0 15px 45px rgba(0,0,0,0.1);
     }
     
     .stat-icon {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+        font-size: 2rem;
+        margin-bottom: 5px;
     }
     
     .stat-number {
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: 700;
         color: var(--rosa-pastel);
     }
     
     .stat-label {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: #888;
     }
     
     .action-card {
         background: white;
         padding: 25px;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.06);
         transition: all 0.3s;
         height: 100%;
+        text-align: center;
     }
     
     .action-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 15px 45px rgba(0,0,0,0.1);
     }
     
     .action-card h5 {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .action-card p {
+        color: #666;
+        margin-bottom: 15px;
+    }
+    
+    @media (max-width: 768px) {
+        .stat-number {
+            font-size: 1.5rem;
+        }
+        
+        .stat-card {
+            padding: 15px 10px;
+        }
     }
 </style>
 
