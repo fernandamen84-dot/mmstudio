@@ -37,7 +37,7 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     
                     <!-- ========================================== -->
-                    <!-- 🔹 ENLACES PARA CLIENTAS (siempre visibles) -->
+                    <!-- 🔹 ENLACES PARA CLIENTAS (NO logueadas) -->
                     <!-- ========================================== -->
                     {% if not user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#disenos">✨ Diseños</a></li>
@@ -57,10 +57,9 @@
                         </li>
                     
                     <!-- ========================================== -->
-                    <!-- 🔹 ENLACES PARA ADMIN (tu hermana) -->
+                    <!-- 🔹 ENLACES PARA ADMIN (logueada) -->
                     <!-- ========================================== -->
                     {% else %}
-                        <!-- Menú de Administración -->
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'dashboard' %}" style="color: #FF69B4 !important; font-weight: 600;">
                                 👑 Dashboard
@@ -82,18 +81,21 @@
                             </a>
                         </li>
                         
-                        <!-- Enlace para ver la página como clienta -->
+                        <!-- ⭐ "Ver página" lleva a la home como clienta ⭐ -->
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home' %}" style="color: #999 !important;">
                                 🏠 Ver página
                             </a>
                         </li>
                         
-                        <!-- Cerrar sesión -->
+                        <!-- ⭐ Cerrar sesión con formulario (SOLUCIONA EL ERROR 405) ⭐ -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}" style="color: #999 !important;">
-                                🚪 Salir
-                            </a>
+                            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link" style="background: none; border: none; color: #999 !important; cursor: pointer; padding: 8px 16px;">
+                                    🚪 Salir
+                                </button>
+                            </form>
                         </li>
                     {% endif %}
                     
