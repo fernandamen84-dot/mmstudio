@@ -37,7 +37,7 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     
                     <!-- ========================================== -->
-                    <!-- 🔹 ENLACES PARA TODOS (SIEMPRE VISIBLES) -->
+                    <!-- 🔹 ENLACES PARA CLIENTAS (SIEMPRE VISIBLES) -->
                     <!-- ========================================== -->
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#disenos">✨ Diseños</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#servicios">💎 Servicios</a></li>
@@ -56,7 +56,7 @@
                     <!-- 🔹 ENLACES SEGÚN AUTENTICACIÓN -->
                     <!-- ========================================== -->
                     {% if user.is_authenticated %}
-                        <!-- Admin logueado -->
+                        <!-- Admin: solo ve Admin y Salir -->
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'dashboard' %}" style="color: #FF69B4 !important; font-weight: 600;">
                                 👑 Admin
@@ -71,7 +71,7 @@
                             </form>
                         </li>
                     {% else %}
-                        <!-- No logueado -->
+                        <!-- Clientes: ven Iniciar sesión -->
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}" style="color: #999 !important;">
                                 🔑 Iniciar sesión
